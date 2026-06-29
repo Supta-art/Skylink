@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EduPath Global — Study Abroad</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #D72638;
+    --navy: #0D1B40;
+    --gold: #F4A823;
+    --white: #FFFFFF;
+    --light: #F5F7FF;
+    --gray: #6B7280;
+    --shadow: 0 8px 32px rgba(13,27,64,0.13);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--white);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw;
+    height: 68px;
+    background: var(--navy);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  }
+  .logo {
+    font-size: 1.35rem; font-weight: 900; color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--gold); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a { color: rgba(255,255,255,0.82); text-decoration: none; font-weight: 600; font-size: .88rem; letter-spacing: .5px; transition: color .2s; }
+  nav ul a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--red); color: var(--white);
+    border: none; border-radius: 6px;
+    padding: .5rem 1.3rem; font-size: .85rem; font-weight: 700;
+    cursor: pointer; letter-spacing: .5px; transition: background .2s;
+  }
+  .nav-cta:hover { background: #b51f2e; }
+
+  /* ── HERO ── */
+  .hero {
+    margin-top: 68px;
+    min-height: 92vh;
+    background: linear-gradient(135deg, var(--navy) 55%, #1a2f6e 100%);
+    display: flex; align-items: center;
+    padding: 5rem 6vw 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,38,56,0.22) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -120px; left: 30%;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244,168,35,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 600px; z-index: 2; position: relative; }
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold); color: var(--navy);
+    font-size: .75rem; font-weight: 800; letter-spacing: 2px;
+    padding: .3rem .9rem; border-radius: 20px;
+    margin-bottom: 1.4rem; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    font-weight: 900; color: var(--white);
+    line-height: 1.1; margin-bottom: .6rem;
+  }
+  .hero h1 .accent { color: var(--red); }
+  .hero-italic {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 1.3rem;
+    color: var(--gold); margin-bottom: 1.4rem;
+    display: block;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.72); font-size: 1rem; line-height: 1.7;
+    max-width: 480px; margin-bottom: 2.2rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: var(--white);
+    border: none; border-radius: 8px;
+    padding: .85rem 2rem; font-size: .95rem; font-weight: 700;
+    cursor: pointer; letter-spacing: .5px;
+    box-shadow: 0 4px 18px rgba(215,38,56,0.35);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(215,38,56,0.45); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 2px solid rgba(255,255,255,0.45); border-radius: 8px;
+    padding: .85rem 2rem; font-size: .95rem; font-weight: 700;
+    cursor: pointer; transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+  .stat { color: var(--white); }
+  .stat strong { display: block; font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .stat span { font-size: .78rem; color: rgba(255,255,255,0.6); letter-spacing: .5px; text-transform: uppercase; }
+
+  /* ── RIBBON ── */
+  .ribbon {
+    background: var(--red);
+    padding: .9rem 6vw;
+    display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; justify-content: center;
+  }
+  .ribbon-item {
+    color: var(--white); font-weight: 700; font-size: .88rem; letter-spacing: .5px;
+    display: flex; align-items: center; gap: .4rem;
+  }
+  .ribbon-item::before { content: '✦'; color: var(--gold); }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 5rem 6vw; }
+  .section-label {
+    text-transform: uppercase; letter-spacing: 2.5px; font-size: .72rem;
+    font-weight: 800; color: var(--red); margin-bottom: .5rem;
+  }
+  .section-title {
+    font-size: clamp(1.7rem, 3.5vw, 2.6rem); font-weight: 900;
+    color: var(--navy); line-height: 1.15; margin-bottom: 1rem;
+  }
+  .section-title span { color: var(--red); }
+  .section-sub { color: var(--gray); font-size: .95rem; line-height: 1.7; max-width: 560px; }
+
+  /* ── DESTINATIONS ── */
+  .destinations { background: var(--light); }
+  .dest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .dest-card {
+    background: var(--white);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform .22s, box-shadow .22s;
+    cursor: pointer;
+  }
+  .dest-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(13,27,64,0.18); }
+  .dest-img {
+    height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    position: relative;
+  }
+  .india-bg { background: linear-gradient(135deg,#FF9933 33%,#fff 33% 66%,#138808 66%); }
+  .uk-bg { background: linear-gradient(135deg,#012169 40%,#C8102E 60%); }
+  .canada-bg { background: linear-gradient(135deg,#FF0000 30%,#fff 30% 70%,#FF0000 70%); }
+  .aus-bg { background: linear-gradient(135deg,#00008B 40%,#FFD700 60%); }
+  .dest-body { padding: 1.1rem 1.2rem 1.4rem; }
+  .dest-body h3 { font-size: 1rem; font-weight: 800; margin-bottom: .3rem; }
+  .dest-body p { font-size: .8rem; color: var(--gray); margin-bottom: .8rem; }
+  .dest-tag {
+    display: inline-block;
+    background: rgba(215,38,56,0.09); color: var(--red);
+    font-size: .72rem; font-weight: 700; padding: .2rem .7rem;
+    border-radius: 20px;
+  }
+
+  /* ── SUCCESS STORIES ── */
+  .stories-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+  .stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1.5rem;
+  }
+  .story-card {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    position: relative;
+  }
+  .story-top {
+    background: linear-gradient(135deg, var(--navy), #1a2f6e);
+    padding: 1.4rem 1.4rem 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .avatar {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: var(--gold); display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: var(--navy);
+    flex-shrink: 0; border: 3px solid rgba(255,255,255,0.3);
+  }
+  .story-name { color: var(--white); font-weight: 800; font-size: 1.05rem; }
+  .story-prog { color: rgba(255,255,255,0.65); font-size: .78rem; margin-top: .2rem; }
+  .story-stamp {
+    position: absolute; top: 1rem; right: 1rem;
+    background: rgba(215,38,56,0.9); color: var(--white);
+    font-size: .62rem; font-weight: 900; letter-spacing: 1px;
+    padding: .3rem .6rem; border-radius: 6px;
+    text-transform: uppercase; border: 2px solid rgba(255,255,255,0.4);
+  }
+  .story-body { padding: 1.2rem 1.4rem 1.4rem; }
+  .scholarship-badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: linear-gradient(90deg, var(--gold), #f9c851);
+    color: var(--navy); font-weight: 900; font-size: .9rem;
+    padding: .4rem .9rem; border-radius: 8px;
+    margin-bottom: .9rem;
+  }
+  .scholarship-badge .pct { font-size: 1.3rem; }
+  .story-uni { font-weight: 700; font-size: .9rem; color: var(--navy); margin-bottom: .25rem; }
+  .story-country { font-size: .78rem; color: var(--gray); }
+
+  /* ── UNIVERSITIES ── */
+  .universities { background: var(--navy); }
+  .universities .section-label { color: var(--gold); }
+  .universities .section-title { color: var(--white); }
+  .universities .section-title span { color: var(--gold); }
+  .universities .section-sub { color: rgba(255,255,255,0.6); }
+  .uni-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.2rem;
+    margin-top: 2.5rem;
+  }
+  .uni-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 1.3rem 1rem;
+    text-align: center;
+    transition: background .2s, border-color .2s;
+    cursor: pointer;
+  }
+  .uni-card:hover { background: rgba(244,168,35,0.12); border-color: var(--gold); }
+  .uni-icon { font-size: 2rem; margin-bottom: .6rem; }
+  .uni-name { color: var(--white); font-weight: 700; font-size: .82rem; line-height: 1.3; }
+  .uni-location { color: rgba(255,255,255,0.45); font-size: .72rem; margin-top: .25rem; }
+
+  /* ── PROCESS ── */
+  .process { background: var(--light); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.5rem; margin-top: 2.5rem;
+  }
+  .step {
+    background: var(--white); border-radius: 14px;
+    padding: 1.8rem 1.5rem; box-shadow: var(--shadow);
+    position: relative; overflow: hidden;
+  }
+  .step::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px; background: var(--red);
+  }
+  .step-num {
+    font-size: 3rem; font-weight: 900; color: rgba(215,38,56,0.1);
+    line-height: 1; margin-bottom: .6rem;
+  }
+  .step-icon { font-size: 1.8rem; margin-bottom: .7rem; }
+  .step h3 { font-size: .95rem; font-weight: 800; margin-bottom: .4rem; }
+  .step p { font-size: .8rem; color: var(--gray); line-height: 1.6; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: linear-gradient(120deg, var(--red) 0%, #8B1425 100%);
+    padding: 4.5rem 6vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 2rem;
+  }
+  .cta-banner h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 900;
+    color: var(--white); max-width: 520px; line-height: 1.2;
+  }
+  .cta-banner h2 span { color: var(--gold); }
+  .btn-white {
+    background: var(--white); color: var(--red);
+    border: none; border-radius: 8px;
+    padding: 1rem 2.4rem; font-size: 1rem; font-weight: 800;
+    cursor: pointer; white-space: nowrap;
+    transition: transform .18s;
+  }
+  .btn-white:hover { transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #07101F;
+    padding: 3rem 6vw 1.5rem;
+  }
+  .footer-top {
+    display: flex; flex-wrap: wrap; gap: 3rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-brand { flex: 1; min-width: 200px; }
+  .footer-logo { font-size: 1.4rem; font-weight: 900; color: var(--white); margin-bottom: .7rem; }
+  .footer-logo span { color: var(--gold); }
+  .footer-brand p { color: rgba(255,255,255,0.45); font-size: .82rem; line-height: 1.7; max-width: 260px; }
+  .footer-col { min-width: 140px; }
+  .footer-col h4 { color: var(--gold); font-size: .78rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; font-weight: 800; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+  .footer-col ul a { color: rgba(255,255,255,0.5); font-size: .82rem; text-decoration: none; transition: color .2s; }
+  .footer-col ul a:hover { color: var(--white); }
+  .footer-contact { min-width: 200px; }
+  .footer-contact h4 { color: var(--gold); font-size: .78rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; font-weight: 800; }
+  .contact-line { display: flex; gap: .6rem; color: rgba(255,255,255,0.55); font-size: .82rem; margin-bottom: .6rem; align-items: flex-start; }
+  .contact-icon { color: var(--gold); flex-shrink: 0; margin-top: .05rem; }
+  .footer-bottom {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    align-items: center;
+  }
+  .footer-bottom p { color: rgba(255,255,255,0.3); font-size: .76rem; }
+  .tagline-footer {
+    background: var(--red); color: var(--white);
+    font-size: .72rem; font-weight: 800; letter-spacing: 1px;
+    padding: .25rem .8rem; border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav ul { display: none; }
+    .hero { padding-top: 3rem; min-height: auto; }
+    .hero-stats { gap: 1.5rem; }
+    .dest-img { height: 110px; }
+    .cta-banner { text-align: center; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">Edu<span>Path</span> Global</div>
+  <ul>
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#stories">Success Stories</a></li>
+    <li><a href="#universities">Universities</a></li>
+    <li><a href="#process">How It Works</a></li>
+  </ul>
+  <button class="nav-cta">Free Consultation</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">✈ Your Future Starts Abroad</div>
+    <h1>Dream Big.<br><span class="accent">Study Global.</span></h1>
+    <em class="hero-italic">Your gateway to world-class education</em>
+    <p>From Bangladesh to the world's top universities — we guide every step, from admission to visa. Scholarships up to 100% available for eligible students.</p>
+    <div class="hero-btns">
+      <button class="btn-primary">Apply Now — It's Free</button>
+      <button class="btn-outline">View Scholarships →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>3,200+</strong><span>Students Placed</span></div>
+      <div class="stat"><strong>98%</strong><span>Visa Success Rate</span></div>
+      <div class="stat"><strong>50+</strong><span>Partner Universities</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- RIBBON -->
+<div class="ribbon">
+  <div class="ribbon-item">100% Free Counselling</div>
+  <div class="ribbon-item">Scholarship Up to 100%</div>
+  <div class="ribbon-item">Visa Assistance Included</div>
+  <div class="ribbon-item">Pre & Post Arrival Support</div>
+  <div class="ribbon-item">NAAC A++ Partner Institutions</div>
+</div>
+
+<!-- DESTINATIONS -->
+<section class="destinations" id="destinations">
+  <div class="section-label">Where Will You Go?</div>
+  <div class="stories-header">
+    <div>
+      <div class="section-title">Top Study <span>Destinations</span></div>
+      <p class="section-sub">Choose from the world's most in-demand academic destinations — each with strong career outcomes and scholarship opportunities.</p>
+    </div>
+  </div>
+  <div class="dest-grid">
+    <div class="dest-card">
+      <div class="dest-img india-bg">🇮🇳</div>
+      <div class="dest-body">
+        <h3>India</h3>
+        <p>NAAC-accredited universities, affordable tuition, and rich cultural experience.</p>
+        <span class="dest-tag">Scholarships up to 75%</span>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-img uk-bg">🇬🇧</div>
+      <div class="dest-body">
+        <h3>United Kingdom</h3>
+        <p>1–2 year postgraduate programs at globally ranked institutions.</p>
+        <span class="dest-tag">Part-time work allowed</span>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-img canada-bg">🇨🇦</div>
+      <div class="dest-body">
+        <h3>Canada</h3>
+        <p>Post-study work permit up to 3 years. PR pathway available.</p>
+        <span class="dest-tag">PR-friendly</span>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-img aus-bg">🇦🇺</div>
+      <div class="dest-body">
+        <h3>Australia</h3>
+        <p>Top QS-ranked universities with strong industry connections worldwide.</p>
+        <span class="dest-tag">Graduate visas available</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES -->
+<section id="stories">
+  <div class="section-label">Real Students, Real Results</div>
+  <div class="stories-header">
+    <div>
+      <div class="section-title">Recent <span>Scholarship</span> Winners</div>
+      <p class="section-sub">Students just like you have secured incredible scholarships through EduPath Global. Here are a few recent success stories.</p>
+    </div>
+  </div>
+  <div class="stories-grid">
+
+    <div class="story-card">
+      <div class="story-top">
+        <div class="avatar">RH</div>
+        <div>
+          <div class="story-name">Rafiul Hasan</div>
+          <div class="story-prog">BBA — Business Administration</div>
+        </div>
+      </div>
+      <div class="story-stamp">✔ APPROVED</div>
+      <div class="story-body">
+        <div class="scholarship-badge"><span class="pct">50%</span> Scholarship Awarded</div>
+        <div class="story-uni">🏛 Sunrise International University</div>
+        <div class="story-country">📍 Gujarat, India</div>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="story-top">
+        <div class="avatar" style="background:#6EC6FF">TN</div>
+        <div>
+          <div class="story-name">Tasnim Noor</div>
+          <div class="story-prog">BSc — Computer Science & AI</div>
+        </div>
+      </div>
+      <div class="story-stamp">✔ APPROVED</div>
+      <div class="story-body">
+        <div class="scholarship-badge"><span class="pct">75%</span> Scholarship Awarded</div>
+        <div class="story-uni">🏛 Horizon Tech University</div>
+        <div class="story-country">📍 Pune, India</div>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="story-top">
+        <div class="avatar" style="background:#9EE09E">SR</div>
+        <div>
+          <div class="story-name">Sabbir Rahman</div>
+          <div class="story-prog">MBA — Global Management</div>
+        </div>
+      </div>
+      <div class="story-stamp">✔ APPROVED</div>
+      <div class="story-body">
+        <div class="scholarship-badge"><span class="pct">60%</span> Scholarship Awarded</div>
+        <div class="story-uni">🏛 Meridian Business School</div>
+        <div class="story-country">📍 Haryana, India</div>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="story-top">
+        <div class="avatar" style="background:#F4A8C6">FA</div>
+        <div>
+          <div class="story-name">Fatema Akter</div>
+          <div class="story-prog">MBBS — Medicine</div>
+        </div>
+      </div>
+      <div class="story-stamp">✔ APPROVED</div>
+      <div class="story-body">
+        <div class="scholarship-badge"><span class="pct">100%</span> Scholarship Awarded</div>
+        <div class="story-uni">🏛 Eastview Medical College</div>
+        <div class="story-country">📍 Kerala, India</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- UNIVERSITIES -->
+<section class="universities" id="universities">
+  <div class="section-label">Our Network</div>
+  <div class="section-title">50+ <span>Partner Universities</span></div>
+  <p class="section-sub" style="margin-bottom:0">We partner exclusively with accredited, high-ranking institutions that offer real scholarship programs for Bangladeshi students.</p>
+  <div class="uni-grid">
+    <div class="uni-card"><div class="uni-icon">🎓</div><div class="uni-name">Sunrise International University</div><div class="uni-location">Gujarat, India</div></div>
+    <div class="uni-card"><div class="uni-icon">🏛</div><div class="uni-name">Horizon Tech University</div><div class="uni-location">Pune, India</div></div>
+    <div class="uni-card"><div class="uni-icon">⚕️</div><div class="uni-name">Eastview Medical College</div><div class="uni-location">Kerala, India</div></div>
+    <div class="uni-card"><div class="uni-icon">🔬</div><div class="uni-name">Meridian Business School</div><div class="uni-location">Haryana, India</div></div>
+    <div class="uni-card"><div class="uni-icon">💼</div><div class="uni-name">BlueSky University</div><div class="uni-location">Chandigarh, India</div></div>
+    <div class="uni-card"><div class="uni-icon">🌏</div><div class="uni-name">Amberfield University</div><div class="uni-location">Noida, India</div></div>
+    <div class="uni-card"><div class="uni-icon">📐</div><div class="uni-name">Crestline Engineering</div><div class="uni-location">Assam, India</div></div>
+    <div class="uni-card"><div class="uni-icon">🌐</div><div class="uni-name">GlobalPath College</div><div class="uni-location">West Bengal, India</div></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-label">Simple & Transparent</div>
+  <div class="section-title">How to Get <span>Started</span></div>
+  <p class="section-sub">Our four-step process gets you from curious to confirmed student in as little as four weeks.</p>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">💬</div>
+      <h3>Free Consultation</h3>
+      <p>Book a session with our expert advisors. We understand your goals, grades, and budget — zero pressure.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">📋</div>
+      <h3>University Match</h3>
+      <p>We shortlist the best-fit programs with maximum scholarship eligibility based on your profile.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">📁</div>
+      <h3>Application & Offer</h3>
+      <p>We handle the entire application, scholarship negotiation, and official offer letter process for you.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-icon">✈️</div>
+      <h3>Visa & Departure</h3>
+      <p>Our visa team prepares your file, attends the appointment with you, and helps until you land safely.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Ready to study abroad with a <span>scholarship</span>? Let's start today.</h2>
+  <button class="btn-white">Book Free Consultation →</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Edu<span>Path</span> Global</div>
+      <p>Bangladesh's most trusted study abroad consultancy. Helping students reach their potential since 2015.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#">Study in India</a></li>
+        <li><a href="#">Study in UK</a></li>
+        <li><a href="#">Study in Canada</a></li>
+        <li><a href="#">Study in Australia</a></li>
+        <li><a href="#">Study in Malaysia</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="#">Undergraduate</a></li>
+        <li><a href="#">Postgraduate</a></li>
+        <li><a href="#">MBBS Abroad</a></li>
+        <li><a href="#">Engineering</a></li>
+        <li><a href="#">MBA Programs</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <div class="contact-line"><span class="contact-icon">📞</span> 01831-XXXXXX, 01841-XXXXXX</div>
+      <div class="contact-line"><span class="contact-icon">🌐</span> www.edupathglobal.com</div>
+      <div class="contact-line"><span class="contact-icon">📍</span> Hakim Plaza, 2nd Floor,<br>Chawakbazar, Chattogram</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 EduPath Global. All rights reserved.</p>
+    <div class="tagline-footer">1 Stop Solution for Study Abroad</div>
+  </div>
+</footer>
+
+</body>
+</html>
